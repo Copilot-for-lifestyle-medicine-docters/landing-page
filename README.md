@@ -1,6 +1,6 @@
 # Eliksir Landing Page
 
-Production-ready marketing site for Eliksir built with Next.js 14 (App Router), TypeScript, Tailwind CSS, shadcn/ui, and Framer Motion.
+Production-ready marketing site for Eliksir built with Next.js 14 (App Router), TypeScript, Tailwind CSS, shadcn/ui, and Framer Motion
 
 ## Getting started
 
