@@ -157,7 +157,7 @@ export default async function Home() {
 
       <section id="who-its-for" className="container pb-24">
         <MotionFade className="max-w-3xl space-y-4">
-          <h2 className="text-3xl font-semibold tracking-tight">Who it's for</h2>
+          <h2 className="text-3xl font-semibold tracking-tight">{"Who it's for"}</h2>
           <p className="text-lg text-foreground/75">
             We partner with innovative labs, clinics, and physicians ready to uplevel interpretation without changing their LIS.
           </p>
@@ -290,7 +290,7 @@ export default async function Home() {
             <p className="text-lg text-foreground/75">{content.earlyAccess.intro}</p>
             <div className="grid gap-6 sm:grid-cols-2">
               <div className="glass rounded-3xl p-6">
-                <h3 className="text-lg font-semibold text-foreground/85">What you'll get</h3>
+                <h3 className="text-lg font-semibold text-foreground/85">{"What you'll get"}</h3>
                 <ul className="mt-4 space-y-3 text-sm text-foreground/70">
                   {content.earlyAccess.whatYouGet.map((item) => (
                     <li key={item} className="flex items-start gap-2">
@@ -301,7 +301,7 @@ export default async function Home() {
                 </ul>
               </div>
               <div className="glass rounded-3xl p-6">
-                <h3 className="text-lg font-semibold text-foreground/85">What we'll measure</h3>
+                <h3 className="text-lg font-semibold text-foreground/85">{"What we'll measure"}</h3>
                 <ul className="mt-4 space-y-3 text-sm text-foreground/70">
                   {content.earlyAccess.whatWeMeasure.map((item) => (
                     <li key={item} className="flex items-start gap-2">

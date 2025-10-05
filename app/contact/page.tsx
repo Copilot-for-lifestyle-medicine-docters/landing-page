@@ -10,10 +10,9 @@ export default function ContactPage() {
   return (
     <main className="container flex flex-1 flex-col pb-24 pt-16">
       <MotionFade className="max-w-2xl space-y-4">
-        <h1 className="text-4xl font-semibold tracking-tight">Let's build your pilot</h1>
+        <h1 className="text-4xl font-semibold tracking-tight">{"Let's build your pilot"}</h1>
         <p className="text-lg text-foreground/75">
-          Share a few details about your lab or clinic and we'll schedule a walkthrough tailored to your test
-          portfolio.
+          {"Share a few details about your lab or clinic and we'll schedule a walkthrough tailored to your test portfolio."}
         </p>
       </MotionFade>
       <MotionFade delay={0.05} className="mt-10 max-w-2xl rounded-[2rem] border border-white/10 bg-white/5 p-10 shadow-glass">
