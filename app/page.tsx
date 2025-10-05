@@ -93,7 +93,7 @@ export default async function Home() {
 
       <header className="relative">
         <div className="container">
-          <nav className="flex flex-col gap-6 py-8 md:flex-row md:items-center md:justify-between">
+          <nav className="flex flex-col gap-4 py-6 md:flex-row md:items-center md:justify-between md:py-8 md:gap-6">
             <Link href="/" className="flex items-center gap-4 text-lg font-semibold">
               <span className="relative inline-flex h-16 w-16 items-center justify-center">
                 <Image
@@ -105,7 +105,7 @@ export default async function Home() {
                 />
               </span>
             </Link>
-            <div className="flex flex-1 flex-wrap items-center justify-between gap-4 md:justify-end">
+            <div className="hidden flex-1 flex-wrap items-center justify-between gap-4 md:flex md:justify-end">
               <div className="flex flex-wrap items-center gap-4 text-sm text-foreground/70">
                 {navItems.map((item) => (
                   <Link key={item.href} href={item.href} className="transition hover:text-foreground">
