@@ -14,6 +14,24 @@ const navItems = [
   { label: "FAQ", href: "#faq" }
 ];
 
+const founders = [
+  {
+    name: "Francisco de los Santos",
+    role: "Co-founder",
+    image: "/founders/francisco.png"
+  },
+  {
+    name: "Maxim Laryn",
+    role: "Co-founder",
+    image: "/founders/maxim.png"
+  },
+  {
+    name: "Yannick Lansink",
+    role: "Co-founder",
+    image: "/founders/yannick.jpeg"
+  }
+];
+
 export async function generateMetadata(): Promise<Metadata> {
   const content = await getLandingContent();
   const title = `${content.hero.title} | Eliksir`;
@@ -96,7 +114,7 @@ export default async function Home() {
                 ))}
               </div>
               <Button asChild size="sm">
-                <Link href={content.hero.primaryCta.href}>
+                <Link href="#final-cta">
                   {content.hero.primaryCta.label}
                 </Link>
               </Button>
@@ -108,7 +126,7 @@ export default async function Home() {
           <MotionFade className="space-y-8">
             <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-foreground/70 shadow-glass">
               <Sparkles className="h-4 w-4 text-accent" aria-hidden />
-              Pattern-level lab insights in minutes
+              Pattern detection
             </div>
             <div className="space-y-6">
               <h1 className="text-4xl font-semibold leading-tight tracking-tight sm:text-5xl lg:text-6xl">
@@ -120,7 +138,7 @@ export default async function Home() {
             </div>
             <div className="flex flex-wrap items-center gap-4">
               <Button asChild size="lg">
-                <Link href={content.hero.primaryCta.href} className="inline-flex items-center gap-2">
+                <Link href="#final-cta" className="inline-flex items-center gap-2">
                   <Mail className="h-4 w-4" aria-hidden />
                   {content.hero.primaryCta.label}
                 </Link>
@@ -325,6 +343,60 @@ export default async function Home() {
         </MotionFade>
       </section>
 
+      <section className="container pb-24">
+        <MotionFade className="space-y-10">
+          <div className="space-y-3 text-center">
+            <h2 className="text-3xl font-semibold tracking-tight">The team behind Eliksir</h2>
+            <p className="text-lg text-foreground/70">
+              Three co-founders blending clinical, product, and engineering rigor to elevate lab interpretation.
+            </p>
+          </div>
+          <div className="grid gap-6 md:grid-cols-3">
+            {founders.map((founder, index) => (
+              <MotionFade
+                key={founder.name}
+                delay={index * 0.05}
+                className="glass flex flex-col items-center rounded-[2rem] p-8 text-center"
+              >
+                <div className="relative mb-6 h-28 w-28 overflow-hidden rounded-full border border-white/10 bg-white">
+                  <Image
+                    src={founder.image}
+                    alt={`${founder.name} headshot`}
+                    fill
+                    sizes="112px"
+                    className="object-cover"
+                  />
+                </div>
+                <h3 className="text-xl font-semibold text-foreground/90">{founder.name}</h3>
+                <p className="mt-2 text-sm uppercase tracking-[0.2em] text-foreground/50">{founder.role}</p>
+              </MotionFade>
+            ))}
+          </div>
+        </MotionFade>
+      </section>
+
+      <section className="container pb-24">
+        <MotionFade className="space-y-8">
+          <div className="space-y-3 text-center">
+            <h2 className="text-3xl font-semibold tracking-tight">Product walkthrough</h2>
+            <p className="text-lg text-foreground/70">
+              See how Eliksir turns raw lab data into clear, actionable insights within minutes.
+            </p>
+          </div>
+          <div className="glass mx-auto max-w-2xl overflow-hidden rounded-[2rem] border border-white/10 shadow-glass">
+            <div className="aspect-video w-full">
+              <iframe
+                title="Eliksir product demo"
+                src="https://www.youtube-nocookie.com/embed/Q1xRESEXwWk?rel=0&modestbranding=1&controls=1&showinfo=0"
+                className="h-full w-full"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+              />
+            </div>
+          </div>
+        </MotionFade>
+      </section>
+
       <section id="faq" className="container pb-24">
         <MotionFade className="max-w-3xl space-y-4">
           <h2 className="text-3xl font-semibold tracking-tight">FAQ</h2>
@@ -347,18 +419,24 @@ export default async function Home() {
         </div>
       </section>
 
-      <section className="container pb-32">
+      <section id="final-cta" className="container pb-32">
         <MotionFade className="glass flex flex-col items-center gap-6 rounded-[2.5rem] px-10 py-14 text-center">
           <p className="text-sm font-semibold uppercase tracking-[0.3em] text-accent/90">Come in contact</p>
           <h2 className="max-w-3xl text-3xl font-semibold tracking-tight sm:text-4xl">
             {content.finalCta.text}
           </h2>
-          <Button asChild size="lg">
-            <Link href={content.finalCta.linkHref} className="inline-flex items-center gap-2">
-              {content.finalCta.linkLabel}
-              <ArrowRight className="h-4 w-4" aria-hidden />
-            </Link>
-          </Button>
+          <div className="flex flex-col items-center gap-3 sm:flex-row sm:gap-6">
+            <Button asChild size="lg">
+              <Link href="mailto:maxim.laryn@gmail.com" className="inline-flex items-center gap-2">
+                Request a pilot
+                <ArrowRight className="h-4 w-4" aria-hidden />
+              </Link>
+            </Button>
+            <div className="flex flex-col items-center gap-1 text-sm text-foreground/70 sm:items-start">
+              <span>maxim.laryn@gmail.com</span>
+              <span>+32 487 22 92 72</span>
+            </div>
+          </div>
         </MotionFade>
       </section>
       </main>

@@ -18,6 +18,11 @@ export const metadata: Metadata = {
     template: "%s | Eliksir"
   },
   description: "AI clinical lab assistant delivering pattern-level insights and clear follow-ups.",
+  icons: {
+    icon: "/images/logo/favicon.png",
+    shortcut: "/images/logo/favicon.png",
+    apple: "/images/logo/favicon.png"
+  },
   openGraph: {
     type: "website",
     locale: "en_US",
