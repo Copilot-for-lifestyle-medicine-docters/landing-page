@@ -77,16 +77,15 @@ export default async function Home() {
         <div className="container">
           <nav className="flex flex-col gap-6 py-8 md:flex-row md:items-center md:justify-between">
             <Link href="/" className="flex items-center gap-4 text-lg font-semibold">
-              <span className="relative inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-white/10 shadow-glass">
+              <span className="relative inline-flex h-16 w-16 items-center justify-center">
                 <Image
                   src="/images/logo/Transparent Logo.png"
                   alt="Eliksir logo"
-                  width={40}
-                  height={40}
+                  width={72}
+                  height={72}
                   className="object-contain"
                 />
               </span>
-              <span className="tracking-tight text-foreground/90">Eliksir</span>
             </Link>
             <div className="flex flex-1 flex-wrap items-center justify-between gap-4 md:justify-end">
               <div className="flex flex-wrap items-center gap-4 text-sm text-foreground/70">
@@ -180,23 +179,27 @@ export default async function Home() {
       </section>
 
       <section id="problem" className="container pb-24">
-        <div className="glass relative overflow-hidden rounded-[2rem] border-white/10 p-10 shadow-glass">
-          <MotionFade>
-            <div className="flex flex-wrap items-center gap-4 text-sm text-foreground/70">
-              <Workflow className="h-5 w-5 text-accent" aria-hidden />
-              The problem today
-            </div>
-            <p className="mt-6 text-xl leading-8 text-foreground/80">
-              {content.problem}
-            </p>
-          </MotionFade>
-          <Image
-            src="/images/yanuzay_cluttered_paper_dissolving_into_a_clean_organized_cha_c4145c22-5244-4263-9772-3ab05e6e07f9_2.png"
-            alt="Before and after comparison of lab reports"
-            width={560}
-            height={420}
-            className="pointer-events-none absolute right-6 top-6 hidden h-auto w-[320px] rounded-3xl border border-white/10 object-cover opacity-70 lg:block"
-          />
+        <div className="glass overflow-hidden rounded-[2rem] border-white/10 p-10 shadow-glass">
+          <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+            <MotionFade className="space-y-6">
+              <div className="flex flex-wrap items-center gap-4 text-sm text-foreground/70">
+                <Workflow className="h-5 w-5 text-accent" aria-hidden />
+                The problem today
+              </div>
+              <p className="text-xl leading-8 text-foreground/80">
+                {content.problem}
+              </p>
+            </MotionFade>
+            <MotionFade delay={0.05} className="relative">
+              <Image
+                src="/images/yanuzay_cluttered_paper_dissolving_into_a_clean_organized_cha_c4145c22-5244-4263-9772-3ab05e6e07f9_2.png"
+                alt="Before and after comparison of lab reports"
+                width={560}
+                height={420}
+                className="h-full w-full rounded-3xl border border-white/10 object-cover"
+              />
+            </MotionFade>
+          </div>
         </div>
       </section>
 
@@ -346,7 +349,7 @@ export default async function Home() {
 
       <section className="container pb-32">
         <MotionFade className="glass flex flex-col items-center gap-6 rounded-[2.5rem] px-10 py-14 text-center">
-          <p className="text-sm font-semibold uppercase tracking-[0.3em] text-accent/90">Call to action</p>
+          <p className="text-sm font-semibold uppercase tracking-[0.3em] text-accent/90">Come in contact</p>
           <h2 className="max-w-3xl text-3xl font-semibold tracking-tight sm:text-4xl">
             {content.finalCta.text}
           </h2>
