@@ -11,12 +11,18 @@ interface AlgorithmSectionProps {
 }
 
 export function AlgorithmSection({ content }: AlgorithmSectionProps) {
-  const kineticNodes = [
+  const kineticNodes: ReadonlyArray<{
+    top?: string;
+    bottom?: string;
+    left?: string;
+    right?: string;
+    delay: string;
+  }> = [
     { top: "8%", left: "16%", delay: "0s" },
     { top: "18%", right: "12%", delay: "1.2s" },
     { bottom: "18%", left: "10%", delay: "2.4s" },
     { bottom: "10%", right: "18%", delay: "3.6s" }
-  ] as const;
+  ];
 
   return (
     <section id="algorithm" className="container pb-24">
