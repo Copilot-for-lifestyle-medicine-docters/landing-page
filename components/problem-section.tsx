@@ -12,12 +12,19 @@ interface ProblemSectionProps {
   content: ProblemContent;
 }
 
-const orbitingParticles = [
+const orbitingParticles: ReadonlyArray<{
+  top?: string;
+  bottom?: string;
+  left?: string;
+  right?: string;
+  size: number;
+  delay: string;
+}> = [
   { top: "-10%", left: "14%", size: 24, delay: "0s" },
   { top: "12%", right: "4%", size: 18, delay: "0.8s" },
   { bottom: "-12%", left: "22%", size: 20, delay: "1.6s" },
   { bottom: "10%", right: "-6%", size: 26, delay: "2.4s" }
-] as const;
+];
 
 export function ProblemSection({ content }: ProblemSectionProps) {
   const problemStats = content.bullets.slice(0, 3);
