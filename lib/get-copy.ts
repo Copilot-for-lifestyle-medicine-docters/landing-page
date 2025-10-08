@@ -57,7 +57,6 @@ export interface LandingContent {
     headline: string;
     subline: string;
     highlights: Array<{ title: string; description: string }>;
-    image: { src: string; alt: string };
   };
   finalCta: {
     banner: string;
@@ -218,11 +217,7 @@ function parseAlgorithm(section: string): LandingContent["algorithm"] {
   return {
     headline: collapseParagraphs(subsections.get("Headline") ?? ""),
     subline: collapseParagraphs(subsections.get("Subline") ?? ""),
-    highlights: parseStrongBulletList(subsections.get("Highlights") ?? ""),
-    image: {
-      src: collapseParagraphs(subsections.get("Image") ?? "/images/yanuzay_minimal_visual_diagram_of_a_simple_medical_algorithm__f5614d81-584f-431d-a40b-3d0393ff3460_3.png"),
-      alt: collapseParagraphs(subsections.get("Image Alt") ?? "Diagram illustrating the Eliksir hybrid algorithm.")
-    }
+    highlights: parseStrongBulletList(subsections.get("Highlights") ?? "")
   };
 }
 

@@ -98,12 +98,6 @@ Hard-coded clinical rules fused with referenced intelligence to surface risk yea
 - **Trusted references** Retrieval-augmented explanations cite the medical sources physicians rely on.
 - **Pattern detection** Our risk-tracking algorithm maps subtle biomarker shifts years before symptoms surface.
 
-### Image
-/images/yanuzay_minimal_visual_diagram_of_a_simple_medical_algorithm__f5614d81-584f-431d-a40b-3d0393ff3460_3.png
-
-### Image Alt
-Minimal flow diagram illustrating lab data processed by deterministic rules and an AI explanation layer.
-
 ## Call to action
 
 ### Banner
