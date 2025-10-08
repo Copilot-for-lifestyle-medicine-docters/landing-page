@@ -122,35 +122,54 @@ export default async function Home() {
           </nav>
         </div>
 
-        <div className="container grid gap-16 pb-24 pt-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
-          <MotionFade className="space-y-8">
-            <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-foreground/70 shadow-glass">
+        <div className="container flex flex-col items-center gap-10 pb-20 pt-8 text-center">
+          <MotionFade className="flex flex-col items-center gap-6">
+            <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3.5 py-1.5 text-xs font-medium uppercase tracking-wide text-foreground/70 shadow-glass sm:text-sm">
               <Sparkles className="h-4 w-4 text-accent" aria-hidden />
-              Pattern detection
+              Preventive lab intelligence
             </div>
-            <div className="space-y-6">
-              <h1 className="text-4xl font-semibold leading-tight tracking-tight sm:text-5xl lg:text-6xl">
+            <div className="space-y-4">
+              <h1 className="text-balance text-4xl font-semibold leading-tight tracking-tight sm:text-5xl">
                 {content.hero.title}
               </h1>
-              <p className="max-w-2xl text-lg text-foreground/75 sm:text-xl">
+              <p className="text-balance text-base text-foreground/75 sm:text-lg">
                 {content.hero.tagline}
               </p>
             </div>
-            <div className="flex flex-wrap items-center gap-4">
-              <Button asChild size="lg">
+            <div className="flex flex-wrap justify-center gap-3">
+              <Button asChild size="sm" className="px-5">
                 <Link href="#final-cta" className="inline-flex items-center gap-2">
                   <Mail className="h-4 w-4" aria-hidden />
                   {content.hero.primaryCta.label}
                 </Link>
               </Button>
-              <Button asChild variant="secondary" size="lg">
+              <Button asChild variant="secondary" size="sm" className="px-5">
                 <Link href={content.hero.secondaryCta.href} className="inline-flex items-center gap-2">
                   Learn how it works
                   <ArrowRight className="h-4 w-4" aria-hidden />
                 </Link>
               </Button>
             </div>
-            <dl className="grid gap-4 sm:grid-cols-3">
+          </MotionFade>
+
+          <MotionFade delay={0.1} className="relative w-full max-w-5xl">
+            <div className="glass relative overflow-hidden rounded-[3rem] border-white/10 bg-white/10 p-5 shadow-glass sm:p-6">
+              <div className="relative overflow-hidden rounded-[2.5rem] bg-white">
+                <Image
+                  src="/images/Ontwerp zonder titel.png"
+                  alt="Eliksir transforming lab reports into preventive intelligence"
+                  width={1781}
+                  height={680}
+                  priority
+                  className="h-auto w-full object-cover"
+                />
+              </div>
+            </div>
+            <div className="pointer-events-none absolute inset-x-12 -bottom-12 h-24 rounded-full bg-black/40 blur-3xl -z-10" aria-hidden />
+          </MotionFade>
+
+          <MotionFade delay={0.15} className="w-full max-w-5xl">
+            <dl className="grid gap-3 text-left sm:grid-cols-3">
               {content.who.map((item) => (
                 <div key={item.title} className="glass rounded-2xl px-4 py-3">
                   <dt className="text-sm font-semibold text-foreground/80">{item.title}</dt>
@@ -158,17 +177,6 @@ export default async function Home() {
                 </div>
               ))}
             </dl>
-          </MotionFade>
-
-          <MotionFade delay={0.1} className="relative h-full min-h-[420px]">
-            <div className="glass absolute inset-0 rounded-3xl border-white/5" />
-            <Image
-              src="/images/yanuzay_three_physicians_looking_at_a_shared_digital_medical__b68691ed-78bf-42e4-bf92-ca43904b9cc9_2.png"
-              alt="Clinicians collaborating around a modern lab report"
-              fill
-              className="rounded-3xl object-cover"
-              priority
-            />
           </MotionFade>
         </div>
       </header>
