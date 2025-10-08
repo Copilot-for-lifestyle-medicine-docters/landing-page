@@ -53,6 +53,12 @@ export interface LandingContent {
     description: string[];
     videoUrl: string;
   };
+  algorithm: {
+    headline: string;
+    subline: string;
+    highlights: Array<{ title: string; description: string }>;
+    image: { src: string; alt: string };
+  };
   finalCta: {
     banner: string;
     primaryCta: CtaLink;
@@ -89,6 +95,7 @@ export async function getLandingContent(): Promise<LandingContent> {
   const success = parseSuccess(sections.get("Success") ?? "");
   const socialProof = parseSocialProof(sections.get("Social proof") ?? "");
   const productWalkthrough = parseProductWalkthrough(sections.get("Product walkthrough") ?? "");
+  const algorithm = parseAlgorithm(sections.get("Algorithm") ?? "");
   const faq = parseFaq(sections.get("FAQ") ?? "");
   const finalCta = parseFinalCta(sections.get("Call to action") ?? "", hero.transformation);
 
@@ -101,6 +108,7 @@ export async function getLandingContent(): Promise<LandingContent> {
     success,
     socialProof,
     productWalkthrough,
+    algorithm,
     finalCta,
     faq
   };
@@ -159,7 +167,7 @@ function parsePlan(section: string): LandingContent["plan"] {
 
   return {
     headline: collapseParagraphs(subsections.get("Headline") ?? "How it works"),
-    steps: parsePlanSteps(subsections.get("Steps") ?? ""),
+    steps: parseOrderedStrongList(subsections.get("Steps") ?? ""),
     subline: collapseParagraphs(subsections.get("Subline") ?? ""),
     primaryCta,
     secondaryCta
@@ -202,6 +210,19 @@ function parseProductWalkthrough(section: string): LandingContent["productWalkth
     headline,
     description,
     videoUrl: extractUrl(videoEntry)
+  };
+}
+
+function parseAlgorithm(section: string): LandingContent["algorithm"] {
+  const { subsections } = parseSubsections(section);
+  return {
+    headline: collapseParagraphs(subsections.get("Headline") ?? ""),
+    subline: collapseParagraphs(subsections.get("Subline") ?? ""),
+    highlights: parseStrongBulletList(subsections.get("Highlights") ?? ""),
+    image: {
+      src: collapseParagraphs(subsections.get("Image") ?? "/images/yanuzay_minimal_visual_diagram_of_a_simple_medical_algorithm__f5614d81-584f-431d-a40b-3d0393ff3460_3.png"),
+      alt: collapseParagraphs(subsections.get("Image Alt") ?? "Diagram illustrating the Eliksir hybrid algorithm.")
+    }
   };
 }
 
@@ -314,7 +335,23 @@ function parseBullets(section: string): string[] {
     .map((line) => line.replace(/^-\s+/, ""));
 }
 
-function parsePlanSteps(section: string): Array<{ title: string; description: string }> {
+function parseStrongBulletList(section: string): Array<{ title: string; description: string }> {
+  return parseBullets(section).map((item) => {
+    const match = item.match(/^\*\*(.+?)\*\*\s*(.+)$/);
+    if (match) {
+      return {
+        title: match[1].trim(),
+        description: match[2].trim()
+      };
+    }
+    return {
+      title: item.trim(),
+      description: ""
+    };
+  });
+}
+
+function parseOrderedStrongList(section: string): Array<{ title: string; description: string }> {
   return section
     .split("\n")
     .map((line) => line.trim())

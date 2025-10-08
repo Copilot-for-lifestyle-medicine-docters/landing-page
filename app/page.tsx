@@ -9,8 +9,9 @@ import { getLandingContent } from "@/lib/get-copy";
 
 const navItems = [
   { label: "Problem", href: "#problem" },
-  { label: "Product", href: "#product" },
   { label: "Plan", href: "#plan" },
+  { label: "Algorithm", href: "#algorithm" },
+  { label: "Product", href: "#product" },
   { label: "Success", href: "#success" },
   { label: "Partners", href: "#social-proof" },
   { label: "FAQ", href: "#faq" }
@@ -287,6 +288,55 @@ export default async function Home() {
                 </Link>
               </Button>
             ) : null}
+          </MotionFade>
+        </section>
+
+        <section id="algorithm" className="container pb-24">
+          <MotionFade className="relative overflow-hidden rounded-[3rem] border border-white/10 bg-gradient-to-br from-white/10 via-white/5 to-transparent p-10 shadow-glass">
+            <div className="pointer-events-none absolute -top-32 right-16 h-72 w-72 rounded-full bg-accent/20 blur-[160px]" aria-hidden />
+            <div className="pointer-events-none absolute -bottom-32 left-10 h-64 w-64 rounded-full bg-cyan-500/15 blur-[140px]" aria-hidden />
+            <div className="relative grid items-center gap-12 lg:grid-cols-[1.1fr_0.9fr]">
+              <div className="space-y-8 text-left">
+                <div className="space-y-4">
+                  <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.4em] text-foreground/70">
+                    Hybrid algorithm
+                  </span>
+                  <h2 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
+                    {content.algorithm.headline}
+                  </h2>
+                  {content.algorithm.subline ? (
+                    <p className="text-lg text-foreground/75">
+                      {content.algorithm.subline}
+                    </p>
+                  ) : null}
+                </div>
+                <div className="grid gap-4 sm:grid-cols-3">
+                  {content.algorithm.highlights.map((highlight) => (
+                    <div key={highlight.title} className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/10 p-5 transition-transform duration-300 hover:-translate-y-1 hover:border-accent/40">
+                      <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                        <div className="absolute inset-0 bg-gradient-to-br from-accent/10 via-transparent to-transparent" />
+                      </div>
+                      <h3 className="text-sm font-semibold text-foreground/90">{highlight.title}</h3>
+                      <p className="mt-3 text-xs leading-relaxed text-foreground/70">{highlight.description}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="relative">
+                <div className="glass overflow-hidden rounded-[2.5rem] border border-white/10 bg-white/10 p-4">
+                  <div className="relative aspect-[4/3] w-full overflow-hidden rounded-[2rem] bg-black/60">
+                    <Image
+                      src={content.algorithm.image.src}
+                      alt={content.algorithm.image.alt}
+                      fill
+                      className="object-cover"
+                      sizes="(min-width: 1024px) 480px, 100vw"
+                    />
+                  </div>
+                </div>
+                <div className="pointer-events-none absolute inset-x-12 -bottom-10 -z-10 h-24 rounded-full bg-black/40 blur-3xl" aria-hidden />
+              </div>
+            </div>
           </MotionFade>
         </section>
 
