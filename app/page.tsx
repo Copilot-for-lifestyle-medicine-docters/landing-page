@@ -9,12 +9,7 @@ import { Button } from "@/components/ui/button";
 import { getLandingContent } from "@/lib/get-copy";
 
 const navItems = [
-  { label: "Problem", href: "#problem" },
-  { label: "Plan", href: "#plan" },
   { label: "Algorithm", href: "#algorithm" },
-  { label: "Product", href: "#product" },
-  { label: "Success", href: "#success" },
-  { label: "Partners", href: "#social-proof" },
   { label: "FAQ", href: "#faq" }
 ];
 
@@ -67,6 +62,9 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function Home() {
   const content = await getLandingContent();
+  const heroSubline = content.hero.subline.trim();
+  const heroTransformation = content.hero.transformation.trim();
+  const showHeroSubline = heroSubline.length > 0 && heroSubline !== heroTransformation;
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "WebSite",
@@ -139,9 +137,11 @@ export default async function Home() {
                 <p className="text-balance text-base text-foreground/80 sm:text-lg">
                   {content.hero.subtitle}
                 </p>
-                <p className="text-balance text-base text-foreground/70 sm:text-lg">
-                  {content.hero.subline}
-                </p>
+                {showHeroSubline ? (
+                  <p className="text-balance text-base text-foreground/70 sm:text-lg">
+                    {content.hero.subline}
+                  </p>
+                ) : null}
               </div>
               <div className="flex flex-wrap justify-center gap-3">
                 <Button asChild size="sm" className="px-5">
