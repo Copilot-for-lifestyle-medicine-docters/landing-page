@@ -1,84 +1,111 @@
-# AI Clinical Lab Assistant
+# Prevent Chronic Diseases Before They Start.
 
-Transform lab reports into clear, actionable insights for physicians to take better care for there patients. 
+We help clinical labs empower doctors to detect risks years earlier.
 
-## Who it's for
+From reactive care → to preventive health.
 
-- **Clinical laboratories** that want to modernize their portal and grow high‑margin test orders
-- **Clinics** that seek to enhance patient care through better lab result interpretation
-- **Physicians** who need fast, trustworthy interpretation to focus on care
+[Book a Demo](#final-cta)
 
-## The problem today
+## Problem
 
-Lab results arrive as static PDFs. Values are isolated. Patterns are missed. Follow‑up tests are not proactively suggested. Physicians lose time and labs leave value on the table.
+### Label
+The Cost of Waiting
 
-## Our solution
+### Headline
+We diagnose too late — and pay the price.
 
-An assistant that sits on top of your existing lab portal to:
+### Bullets
+- 1 in 10 adults in Belgium has diabetes.
+- 1 in 3 doesn’t even know it yet.
+- Clinical labs already hold the warning signs, but today’s tools miss the early patterns.
 
-- **Interpret patterns** across biomarkers using deterministic rules and optimal ranges
-- **Flag risk profiles** clinicians care about
-- **Recommend follow‑up tests** to confirm or rule out concerns
-- **Explain clearly** so physicians act with confidence
+## Guide
 
-## Why labs/clinics choose us
+### Headline
+We’re scientists, clinicians, and engineers on a mission to end reactive medicine.
 
-- **Revenue uplift** from clinically appropriate add‑on tests
-- **Delight physicians** with a modern, interactive experience
-- **Frictionless integration** as white‑label or API
+### Body
+Founded by a pharmacist, an AI engineer, and a neuroscientist, Eliksir builds AI for preventive and longevity medicine.
+We help labs move beyond traditional reference ranges — spotting subtle dysfunctions long before disease begins.
 
-## Why physicians rely on it
+### Visual Note
+From Sick Care → Preventive Care.
 
-- **Minutes saved per report** with a clear, interactive summary
-- **Better decisions** with pattern‑level interpretation, not just single values
-- **Actionable next steps** with transparent rationales
-- **Preventive healthcare** instead of reactive
+## Plan
 
-## How it works
+### Headline
+How It Works
 
-1. Securely ingest lab results from your existing portal or LIS (or use our standalone web app)
-2. Normalize units and apply deterministic rule engine with optimal ranges → Our pattern detection system will flag certain risks a patient has. 
-3. Surface risk patterns and recommended follow‑up tests
-4. Provide a concise, clinician‑friendly summary
+### Steps
+1. **Integrate Eliksir AI** — Plug into your existing lab data or API.
+2. **Enhance Lab Reports** — Deliver optimized, doctor-friendly insights.
+3. **Empower Preventive Care** — Help doctors detect risks early, and labs grow loyalty + revenue.
 
-## Compliance by design
+### Subline
+You keep the lab. We enhance its intelligence.
 
-- Built to align with quality and safety expectations from day one
-- Roadmap includes QMS and CE pathways appropriate for scope
+### CTA
+[Start a Pilot](#final-cta) | [Request Partnership Info](#final-cta)
 
-## Early access pilots
+## Stakes
 
-We’re partnering with a small number of labs/clinics to validate revenue uplift from recommended tests and refine clinician UX in production settings.
+- Chronic diseases already cost Europe €207 billion per year.
+- Every missed early marker means another life altered, another cost added.
+- Labs that don’t adapt risk becoming just data factories — instead of leaders in the preventive era.
 
-### What you’ll get
+## Success
 
-- Deployment in your existing portal (white‑label)
-- Co‑created clinical rules tailored to your test menu
-- Usage and impact reporting
+### Headline
+From lab reports to health intelligence.
 
-### What we’ll measure together
+### Body
+With Eliksir, your lab becomes the bridge between data and prevention.
+Together, we can reduce premature deaths from chronic disease by one-third by 2030.
 
-- Increase in follow‑up test orders
-- Physician time saved per report
-- Adoption and satisfaction
+## Social proof
 
-## FAQ
+### Logos
+- FIDLAB (in discussion)
+- CERBA (in discussion)
+- SYNLAB (in discussion)
+- VLAIO-supported innovation project
+- BSLM reference
 
-- **Is this a replacement for clinical judgment?**
-    
-    No. It accelerates interpretation and surfaces patterns; clinicians remain in control.
-    
-- **How is this different from a PDF comment or static ranges?**
-    
-    We analyze patterns across biomarkers, use optimal ranges, and recommend targeted follow‑ups with clear rationale.
-    
-- **How does integration work?**
-    
-    White‑label UI or API overlaying your current portal. No rip‑and‑replace.
-    
+### Testimonial
+"Eliksir gives us a smarter, more preventive way to interpret results. It’s like adding a clinical brain to our lab system." — Medical Director, Pilot Partner
+
+## Product walkthrough
+
+### Headline
+See how preventive intelligence appears inside your lab workflow.
+
+### Description
+Watch a three-minute walkthrough of Eliksir transforming raw biomarker data into doctor-ready insights, including risk pattern detection and suggested next steps.
+
+### Video
+https://www.youtube-nocookie.com/embed/Q1xRESEXwWk?rel=0&modestbranding=1&controls=1&showinfo=0
 
 ## Call to action
 
-- Request a pilot to see the revenue and clinician‑experience impact within 4 weeks.
+### Banner
+Help us prevent chronic diseases through smarter lab testing.
 
-[Request a pilot →](mailto:yannick.lansink@live.nl)
+### Primary
+[Book a Demo](mailto:yannick@eliksir.health)
+
+### Transformation
+From reactive care → to preventive health.
+
+## FAQ
+
+- **Is Eliksir a medical device?**
+  
+  We provide clinical decision support; physicians remain in control. Regulatory pathways are in motion to match the scope of deployment.
+  
+- **How do you integrate with existing lab systems?**
+  
+  We overlay via API or white-labeled portal without touching your LIS. Our team handles configuration and validation.
+  
+- **What data security measures are in place?**
+  
+  Data stays in-region, encrypted in transit and at rest, reviewed under healthcare-grade security standards.

@@ -1,16 +1,18 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Mail, ShieldCheck, Sparkles, Workflow } from "lucide-react";
+import { AlertTriangle, ArrowRight, Mail, Quote, Sparkles, Workflow } from "lucide-react";
 
 import { MotionFade } from "@/components/motion-fade";
 import { Button } from "@/components/ui/button";
 import { getLandingContent } from "@/lib/get-copy";
 
 const navItems = [
-  { label: "Who it's for", href: "#who-its-for" },
-  { label: "Solution", href: "#our-solution" },
-  { label: "How it works", href: "#how-it-works" },
+  { label: "Problem", href: "#problem" },
+  { label: "Product", href: "#product" },
+  { label: "Plan", href: "#plan" },
+  { label: "Success", href: "#success" },
+  { label: "Partners", href: "#social-proof" },
   { label: "FAQ", href: "#faq" }
 ];
 
@@ -37,10 +39,10 @@ export async function generateMetadata(): Promise<Metadata> {
   const title = `${content.hero.title} | Eliksir`;
   return {
     title,
-    description: content.hero.tagline,
+    description: content.hero.subline,
     openGraph: {
       title,
-      description: content.hero.tagline,
+      description: content.hero.subline,
       url: "https://www.eliksir.health",
       type: "website",
       images: [
@@ -55,7 +57,7 @@ export async function generateMetadata(): Promise<Metadata> {
     twitter: {
       card: "summary_large_image",
       title,
-      description: content.hero.tagline,
+      description: content.hero.subline,
       images: ["/images/yanuzay_three_physicians_looking_at_a_shared_digital_medical__b68691ed-78bf-42e4-bf92-ca43904b9cc9_2.png"]
     }
   };
@@ -71,7 +73,7 @@ export default async function Home() {
     potentialAction: {
       "@type": "ContactAction",
       target: content.hero.primaryCta.href,
-      description: content.finalCta.text
+      description: content.finalCta.banner
     },
     publisher: {
       "@type": "Organization",
@@ -91,362 +93,340 @@ export default async function Home() {
           <div className="pointer-events-none absolute right-[-80px] top-[-160px] h-[620px] w-[620px] rounded-full bg-cyan-500/10 blur-[200px]" />
         </div>
 
-      <header className="relative">
-        <div className="container">
-          <nav className="flex flex-col gap-4 py-6 md:flex-row md:items-center md:justify-between md:py-8 md:gap-6">
-            <Link href="/" className="flex items-center gap-4 text-lg font-semibold">
-              <span className="relative inline-flex h-16 w-16 items-center justify-center">
-                <Image
-                  src="/images/logo/Transparent Logo.png"
-                  alt="Eliksir logo"
-                  width={72}
-                  height={72}
-                  className="object-contain"
-                />
-              </span>
-            </Link>
-            <div className="hidden flex-1 flex-wrap items-center justify-between gap-4 md:flex md:justify-end">
-              <div className="flex flex-wrap items-center gap-4 text-sm text-foreground/70">
-                {navItems.map((item) => (
-                  <Link key={item.href} href={item.href} className="transition hover:text-foreground">
-                    {item.label}
-                  </Link>
-                ))}
-              </div>
-              <Button asChild size="sm">
-                <Link href="#final-cta">
-                  {content.hero.primaryCta.label}
-                </Link>
-              </Button>
-            </div>
-          </nav>
-        </div>
-
-        <div className="container flex flex-col items-center gap-10 pb-20 pt-8 text-center">
-          <MotionFade className="flex flex-col items-center gap-6">
-            <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3.5 py-1.5 text-xs font-medium uppercase tracking-wide text-foreground/70 shadow-glass sm:text-sm">
-              <Sparkles className="h-4 w-4 text-accent" aria-hidden />
-              Preventive lab intelligence
-            </div>
-            <div className="space-y-4">
-              <h1 className="text-balance text-4xl font-semibold leading-tight tracking-tight sm:text-5xl">
-                {content.hero.title}
-              </h1>
-              <p className="text-balance text-base text-foreground/75 sm:text-lg">
-                {content.hero.tagline}
-              </p>
-            </div>
-            <div className="flex flex-wrap justify-center gap-3">
-              <Button asChild size="sm" className="px-5">
-                <Link href="#final-cta" className="inline-flex items-center gap-2">
-                  <Mail className="h-4 w-4" aria-hidden />
-                  {content.hero.primaryCta.label}
-                </Link>
-              </Button>
-              <Button asChild variant="secondary" size="sm" className="px-5">
-                <Link href={content.hero.secondaryCta.href} className="inline-flex items-center gap-2">
-                  Learn how it works
-                  <ArrowRight className="h-4 w-4" aria-hidden />
-                </Link>
-              </Button>
-            </div>
-          </MotionFade>
-
-          <MotionFade delay={0.1} className="relative w-full max-w-5xl">
-            <div className="glass relative overflow-hidden rounded-[3rem] border-white/10 bg-white/10 p-5 shadow-glass sm:p-6">
-              <div className="relative overflow-hidden rounded-[2.5rem] bg-white">
-                <Image
-                  src="/images/Ontwerp zonder titel.png"
-                  alt="Eliksir transforming lab reports into preventive intelligence"
-                  width={1781}
-                  height={680}
-                  priority
-                  className="h-auto w-full object-cover"
-                />
-              </div>
-            </div>
-            <div className="pointer-events-none absolute inset-x-12 -bottom-12 h-24 rounded-full bg-black/40 blur-3xl -z-10" aria-hidden />
-          </MotionFade>
-
-          <MotionFade delay={0.15} className="w-full max-w-5xl">
-            <dl className="grid gap-3 text-left sm:grid-cols-3">
-              {content.who.map((item) => (
-                <div key={item.title} className="glass rounded-2xl px-4 py-3">
-                  <dt className="text-sm font-semibold text-foreground/80">{item.title}</dt>
-                  <dd className="mt-1 text-sm text-foreground/65">{item.description}</dd>
-                </div>
-              ))}
-            </dl>
-          </MotionFade>
-        </div>
-      </header>
-
-      <section id="who-its-for" className="container pb-24">
-        <MotionFade className="max-w-3xl space-y-4">
-          <h2 className="text-3xl font-semibold tracking-tight">{"Who it's for"}</h2>
-          <p className="text-lg text-foreground/75">
-            We partner with innovative labs, clinics, and physicians ready to uplevel interpretation without changing their LIS.
-          </p>
-        </MotionFade>
-        <MotionFade delay={0.05} className="mt-12 grid gap-6 md:grid-cols-3">
-          {content.who.map((item) => (
-            <div key={item.title} className="group glass flex h-full flex-col justify-between rounded-3xl p-6 transition-transform hover:-translate-y-1">
-              <div>
-                <h3 className="text-lg font-semibold text-foreground/90">{item.title}</h3>
-                <p className="mt-3 text-sm leading-relaxed text-foreground/70">{item.description}</p>
-              </div>
-              <div className="mt-6 flex items-center text-sm font-semibold text-accent/90 opacity-0 transition group-hover:opacity-100">
-                Tailored flows
-                <ArrowRight className="ml-2 h-4 w-4" aria-hidden />
-              </div>
-            </div>
-          ))}
-        </MotionFade>
-      </section>
-
-      <section id="problem" className="container pb-24">
-        <div className="glass overflow-hidden rounded-[2rem] border-white/10 p-10 shadow-glass">
-          <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-            <MotionFade className="space-y-6">
-              <div className="flex flex-wrap items-center gap-4 text-sm text-foreground/70">
-                <Workflow className="h-5 w-5 text-accent" aria-hidden />
-                The problem today
-              </div>
-              <p className="text-xl leading-8 text-foreground/80">
-                {content.problem}
-              </p>
-            </MotionFade>
-            <MotionFade delay={0.05} className="relative">
-              <Image
-                src="/images/yanuzay_cluttered_paper_dissolving_into_a_clean_organized_cha_c4145c22-5244-4263-9772-3ab05e6e07f9_2.png"
-                alt="Before and after comparison of lab reports"
-                width={560}
-                height={420}
-                className="h-full w-full rounded-3xl border border-white/10 object-cover"
-              />
-            </MotionFade>
-          </div>
-        </div>
-      </section>
-
-      <section id="our-solution" className="container pb-24">
-        <MotionFade className="max-w-2xl space-y-4">
-          <h2 className="text-3xl font-semibold tracking-tight">Our solution</h2>
-          <p className="text-lg text-foreground/75">{content.solution.intro}</p>
-        </MotionFade>
-        <MotionFade delay={0.05} className="mt-12 grid gap-6 lg:grid-cols-2">
-          {content.solution.bullets.map((item) => (
-            <article key={item.title} className="glass rounded-3xl p-8">
-              <h3 className="text-xl font-semibold text-foreground/90">{item.title}</h3>
-              <p className="mt-3 text-sm leading-relaxed text-foreground/70">{item.description}</p>
-            </article>
-          ))}
-        </MotionFade>
-      </section>
-
-      <section className="container pb-24">
-        <div className="grid gap-8 lg:grid-cols-2">
-          <MotionFade className="glass rounded-[2rem] p-10">
-            <div className="flex items-center gap-3 text-sm font-semibold text-accent/90">
-              <ShieldCheck className="h-5 w-5" aria-hidden />
-              Why labs & clinics choose us
-            </div>
-            <ul className="mt-6 space-y-5 text-sm text-foreground/75">
-              {content.labsChooseUs.map((item) => (
-                <li key={item.title} className="rounded-2xl bg-white/5 p-4">
-                  <p className="font-semibold text-foreground/85">{item.title}</p>
-                  <p className="mt-2 text-foreground/65">{item.description}</p>
-                </li>
-              ))}
-            </ul>
-          </MotionFade>
-          <MotionFade delay={0.05} className="glass rounded-[2rem] p-10">
-            <div className="flex items-center gap-3 text-sm font-semibold text-accent/90">
-              <ShieldCheck className="h-5 w-5" aria-hidden />
-              Why physicians rely on it
-            </div>
-            <ul className="mt-6 space-y-5 text-sm text-foreground/75">
-              {content.physiciansRely.map((item) => (
-                <li key={item.title} className="rounded-2xl bg-white/5 p-4">
-                  <p className="font-semibold text-foreground/85">{item.title}</p>
-                  <p className="mt-2 text-foreground/65">{item.description}</p>
-                </li>
-              ))}
-            </ul>
-          </MotionFade>
-        </div>
-      </section>
-
-      <section id="how-it-works" className="container pb-24">
-        <MotionFade className="max-w-3xl space-y-4">
-          <h2 className="text-3xl font-semibold tracking-tight">How it works</h2>
-          <p className="text-lg text-foreground/75">
-            Four steps to illuminate every report without changing your existing systems.
-          </p>
-        </MotionFade>
-        <MotionFade delay={0.05} className="mt-12 grid gap-6 lg:grid-cols-4">
-          {content.howItWorks.map((step, index) => (
-            <div key={step} className="glass flex h-full flex-col justify-between rounded-3xl p-6">
-              <span className="text-5xl font-semibold text-accent/90">0{index + 1}</span>
-              <p className="mt-6 text-sm leading-relaxed text-foreground/70">{step}</p>
-            </div>
-          ))}
-        </MotionFade>
-      </section>
-
-      <section className="container pb-24">
-        <MotionFade className="glass rounded-[2rem] p-10">
-          <div className="flex items-center gap-3 text-sm font-semibold text-accent/90">
-            Compliance by design
-          </div>
-          <ul className="mt-6 grid gap-4 md:grid-cols-2">
-            {content.compliance.map((item) => (
-              <li key={item} className="rounded-2xl bg-white/5 p-5 text-sm text-foreground/70">
-                {item}
-              </li>
-            ))}
-          </ul>
-        </MotionFade>
-      </section>
-
-      <section className="container pb-24">
-        <MotionFade className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-center">
-          <div className="space-y-5">
-            <h2 className="text-3xl font-semibold tracking-tight">Early access pilots</h2>
-            <p className="text-lg text-foreground/75">{content.earlyAccess.intro}</p>
-            <div className="grid gap-6 sm:grid-cols-2">
-              <div className="glass rounded-3xl p-6">
-                <h3 className="text-lg font-semibold text-foreground/85">{"What you'll get"}</h3>
-                <ul className="mt-4 space-y-3 text-sm text-foreground/70">
-                  {content.earlyAccess.whatYouGet.map((item) => (
-                    <li key={item} className="flex items-start gap-2">
-                      <span className="mt-1 h-1.5 w-1.5 rounded-full bg-accent" aria-hidden />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="glass rounded-3xl p-6">
-                <h3 className="text-lg font-semibold text-foreground/85">{"What we'll measure"}</h3>
-                <ul className="mt-4 space-y-3 text-sm text-foreground/70">
-                  {content.earlyAccess.whatWeMeasure.map((item) => (
-                    <li key={item} className="flex items-start gap-2">
-                      <span className="mt-1 h-1.5 w-1.5 rounded-full bg-accent" aria-hidden />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div className="relative hidden h-[420px] rounded-[2.5rem] bg-gradient-to-br from-white/10 to-transparent p-4 shadow-glass lg:block">
-            <div className="glass absolute inset-0 rounded-[2.5rem]" />
-            <Image
-              src="/images/yanuzay_branching_path_of_test_tubes_one_highlighted_green_as_0d2e7512-45fd-44ab-9128-06b443b7e3c3_1.png"
-              alt="Modern lab equipment"
-              fill
-              className="rounded-[2.5rem] object-cover"
-            />
-          </div>
-        </MotionFade>
-      </section>
-
-      <section className="container pb-24">
-        <MotionFade className="space-y-10">
-          <div className="space-y-3 text-center">
-            <h2 className="text-3xl font-semibold tracking-tight">The team behind Eliksir</h2>
-            <p className="text-lg text-foreground/70">
-              Three co-founders blending clinical, product, and engineering rigor to elevate lab interpretation.
-            </p>
-          </div>
-          <div className="grid gap-6 md:grid-cols-3">
-            {founders.map((founder, index) => (
-              <MotionFade
-                key={founder.name}
-                delay={index * 0.05}
-                className="glass flex flex-col items-center rounded-[2rem] p-8 text-center"
-              >
-                <div className="relative mb-6 h-28 w-28 overflow-hidden rounded-full border border-white/10 bg-white">
+        <header className="relative">
+          <div className="container">
+            <nav className="flex flex-col gap-4 py-6 md:flex-row md:items-center md:justify-between md:gap-6 md:py-8">
+              <Link href="/" className="flex items-center gap-4 text-lg font-semibold">
+                <span className="relative inline-flex h-16 w-16 items-center justify-center">
                   <Image
-                    src={founder.image}
-                    alt={`${founder.name} headshot`}
-                    fill
-                    sizes="112px"
-                    className="object-cover"
+                    src="/images/logo/Transparent Logo.png"
+                    alt="Eliksir logo"
+                    width={72}
+                    height={72}
+                    className="object-contain"
+                  />
+                </span>
+              </Link>
+              <div className="hidden flex-1 flex-wrap items-center justify-between gap-4 md:flex md:justify-end">
+                <div className="flex flex-wrap items-center gap-4 text-sm text-foreground/70">
+                  {navItems.map((item) => (
+                    <Link key={item.href} href={item.href} className="transition hover:text-foreground">
+                      {item.label}
+                    </Link>
+                  ))}
+                </div>
+                <Button asChild size="sm">
+                  <Link href={content.hero.primaryCta.href}>
+                    {content.hero.primaryCta.label}
+                  </Link>
+                </Button>
+              </div>
+            </nav>
+          </div>
+
+          <div className="container flex flex-col items-center gap-10 pb-20 pt-8 text-center">
+            <MotionFade className="flex flex-col items-center gap-6">
+              <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3.5 py-1.5 text-xs font-medium uppercase tracking-wide text-foreground/70 shadow-glass sm:text-sm">
+                <Sparkles className="h-4 w-4 text-accent" aria-hidden />
+                {content.hero.transformation}
+              </div>
+              <div className="space-y-4">
+                <h1 className="text-balance text-4xl font-semibold leading-tight tracking-tight sm:text-5xl">
+                  {content.hero.title}
+                </h1>
+                <p className="text-balance text-base text-foreground/80 sm:text-lg">
+                  {content.hero.subtitle}
+                </p>
+                <p className="text-balance text-base text-foreground/70 sm:text-lg">
+                  {content.hero.subline}
+                </p>
+              </div>
+              <div className="flex flex-wrap justify-center gap-3">
+                <Button asChild size="sm" className="px-5">
+                  <Link href={content.hero.primaryCta.href} className="inline-flex items-center gap-2">
+                    <Mail className="h-4 w-4" aria-hidden />
+                    {content.hero.primaryCta.label}
+                  </Link>
+                </Button>
+                {content.hero.secondaryCta ? (
+                  <Button asChild variant="secondary" size="sm" className="px-5">
+                    <Link href={content.hero.secondaryCta.href} className="inline-flex items-center gap-2">
+                      {content.hero.secondaryCta.label}
+                      <ArrowRight className="h-4 w-4" aria-hidden />
+                    </Link>
+                  </Button>
+                ) : null}
+              </div>
+            </MotionFade>
+
+            <MotionFade delay={0.1} className="relative w-full max-w-5xl">
+              <div className="glass relative overflow-hidden rounded-[3rem] border-white/10 bg-white/10 p-5 shadow-glass sm:p-6">
+                <div className="relative overflow-hidden rounded-[2.5rem] bg-white">
+                  <Image
+                    src="/images/Ontwerp zonder titel.png"
+                    alt="Eliksir transforming lab reports into preventive intelligence"
+                    width={1781}
+                    height={680}
+                    priority
+                    className="h-auto w-full object-cover"
                   />
                 </div>
-                <h3 className="text-xl font-semibold text-foreground/90">{founder.name}</h3>
-                <p className="mt-2 text-sm uppercase tracking-[0.2em] text-foreground/50">{founder.role}</p>
-              </MotionFade>
-            ))}
+              </div>
+              <div className="pointer-events-none absolute inset-x-12 -bottom-12 -z-10 h-24 rounded-full bg-black/40 blur-3xl" aria-hidden />
+            </MotionFade>
           </div>
-        </MotionFade>
-      </section>
+        </header>
 
-      <section className="container pb-24">
-        <MotionFade className="space-y-8">
-          <div className="space-y-3 text-center">
-            <h2 className="text-3xl font-semibold tracking-tight">Product walkthrough</h2>
-            <p className="text-lg text-foreground/70">
-              See how Eliksir turns raw lab data into clear, actionable insights within minutes.
-            </p>
-          </div>
-          <div className="glass mx-auto max-w-2xl overflow-hidden rounded-[2rem] border border-white/10 shadow-glass">
+        <section id="problem" className="container pb-24">
+          <MotionFade className="glass overflow-hidden rounded-[2rem] border-white/10 p-10 shadow-glass">
+            <div className="flex flex-wrap items-center gap-3 text-sm font-semibold text-accent/90">
+              <Workflow className="h-5 w-5" aria-hidden />
+              {content.problem.label}
+            </div>
+            <h2 className="mt-6 text-3xl font-semibold tracking-tight text-foreground">
+              {content.problem.headline}
+            </h2>
+            <ul className="mt-6 space-y-3 text-base text-foreground/75">
+              {content.problem.bullets.map((bullet) => (
+                <li key={bullet} className="flex items-start gap-3">
+                  <span className="mt-1 h-2 w-2 rounded-full bg-accent" aria-hidden />
+                  <span>{bullet}</span>
+                </li>
+              ))}
+            </ul>
+            {content.problem.visualNote ? (
+              <p className="mt-8 text-sm italic text-foreground/60">
+                {content.problem.visualNote}
+              </p>
+            ) : null}
+          </MotionFade>
+        </section>
+
+        <section id="guide" className="container pb-24">
+          <MotionFade className="max-w-4xl space-y-5">
+            <h2 className="text-3xl font-semibold tracking-tight text-foreground">
+              {content.guide.headline}
+            </h2>
+            {content.guide.body.map((paragraph) => (
+              <p key={paragraph} className="text-lg leading-relaxed text-foreground/75">
+                {paragraph}
+              </p>
+            ))}
+            {content.guide.visualNote ? (
+              <p className="text-sm uppercase tracking-[0.3em] text-accent/80">
+                {content.guide.visualNote}
+              </p>
+            ) : null}
+          </MotionFade>
+
+          <MotionFade delay={0.05} className="mt-12 space-y-8">
+            <div className="glass rounded-[2rem] p-8">
+              <h3 className="text-center text-sm font-semibold uppercase tracking-[0.4em] text-foreground/60">
+                Meet the founders
+              </h3>
+              <div className="mt-8 grid gap-6 md:grid-cols-3">
+                {founders.map((founder, index) => (
+                  <MotionFade
+                    key={founder.name}
+                    delay={index * 0.05}
+                    className="glass flex flex-col items-center rounded-[2rem] p-8 text-center"
+                  >
+                    <div className="relative mb-6 h-28 w-28 overflow-hidden rounded-full border border-white/10 bg-white">
+                      <Image
+                        src={founder.image}
+                        alt={`${founder.name} headshot`}
+                        fill
+                        sizes="112px"
+                        className="object-cover"
+                      />
+                    </div>
+                    <h4 className="text-lg font-semibold text-foreground/90">{founder.name}</h4>
+                    <p className="mt-2 text-xs uppercase tracking-[0.3em] text-foreground/50">{founder.role}</p>
+                  </MotionFade>
+                ))}
+              </div>
+            </div>
+          </MotionFade>
+        </section>
+
+        <section id="plan" className="container pb-24">
+          <MotionFade className="max-w-3xl space-y-4 text-center md:text-left">
+            <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3.5 py-1.5 text-xs font-medium uppercase tracking-wide text-foreground/70 shadow-glass">
+              <Sparkles className="h-4 w-4 text-accent" aria-hidden />
+              Simple partnership plan
+            </div>
+            <h2 className="text-3xl font-semibold tracking-tight text-foreground">
+              {content.plan.headline}
+            </h2>
+            {content.plan.subline ? (
+              <p className="text-lg text-foreground/75">{content.plan.subline}</p>
+            ) : null}
+          </MotionFade>
+          <MotionFade delay={0.05} className="mt-12 grid gap-6 md:grid-cols-3">
+            {content.plan.steps.map((step, index) => (
+              <div key={step.title} className="glass flex h-full flex-col rounded-3xl p-6">
+                <span className="text-sm font-semibold uppercase tracking-[0.3em] text-accent/80">
+                  Step 0{index + 1}
+                </span>
+                <h3 className="mt-4 text-xl font-semibold text-foreground/90">{step.title}</h3>
+                <p className="mt-3 text-sm leading-relaxed text-foreground/70">{step.description}</p>
+              </div>
+            ))}
+          </MotionFade>
+          <MotionFade delay={0.1} className="mt-10 flex flex-wrap items-center justify-center gap-4">
+            <Button asChild size="lg">
+              <Link href={content.plan.primaryCta.href} className="inline-flex items-center gap-2">
+                {content.plan.primaryCta.label}
+                <ArrowRight className="h-5 w-5" aria-hidden />
+              </Link>
+            </Button>
+            {content.plan.secondaryCta ? (
+              <Button asChild variant="secondary" size="lg">
+                <Link href={content.plan.secondaryCta.href} className="inline-flex items-center gap-2">
+                  {content.plan.secondaryCta.label}
+                </Link>
+              </Button>
+            ) : null}
+          </MotionFade>
+        </section>
+
+        <section id="product" className="container pb-24">
+          <MotionFade className="space-y-6 text-center">
+            <h2 className="text-3xl font-semibold tracking-tight text-foreground">
+              {content.productWalkthrough.headline}
+            </h2>
+            {content.productWalkthrough.description.map((paragraph) => (
+              <p key={paragraph} className="mx-auto max-w-2xl text-lg leading-relaxed text-foreground/75">
+                {paragraph}
+              </p>
+            ))}
+          </MotionFade>
+          <MotionFade delay={0.05} className="mt-10 glass mx-auto max-w-3xl overflow-hidden rounded-[2rem] border border-white/10 shadow-glass">
             <div className="aspect-video w-full">
               <iframe
-                title="Eliksir product demo"
-                src="https://www.youtube-nocookie.com/embed/Q1xRESEXwWk?rel=0&modestbranding=1&controls=1&showinfo=0"
+                title="Eliksir product walkthrough"
+                src={content.productWalkthrough.videoUrl}
                 className="h-full w-full"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowFullScreen
               />
             </div>
-          </div>
-        </MotionFade>
-      </section>
+          </MotionFade>
+        </section>
 
-      <section id="faq" className="container pb-24">
-        <MotionFade className="max-w-3xl space-y-4">
-          <h2 className="text-3xl font-semibold tracking-tight">FAQ</h2>
-          <p className="text-lg text-foreground/75">Answers to the most common questions from labs and clinicians.</p>
-        </MotionFade>
-        <div className="mt-10 space-y-4">
-          {content.faq.map((item, index) => (
-            <MotionFade key={item.question} delay={index * 0.04} className="overflow-hidden rounded-3xl border border-white/10 bg-white/5">
-              <details className="group" open={index === 0}>
-                <summary className="flex cursor-pointer items-center justify-between gap-4 px-6 py-5 text-lg font-semibold text-foreground/85">
-                  {item.question}
-                  <span className="transition group-open:rotate-45">+</span>
-                </summary>
-                <div className="border-t border-white/10 bg-white/5 px-6 py-5 text-sm leading-relaxed text-foreground/70">
-                  {item.answer}
-                </div>
-              </details>
-            </MotionFade>
-          ))}
-        </div>
-      </section>
-
-      <section id="final-cta" className="container pb-32">
-        <MotionFade className="glass flex flex-col items-center gap-6 rounded-[2.5rem] px-10 py-14 text-center">
-          <p className="text-sm font-semibold uppercase tracking-[0.3em] text-accent/90">Come in contact</p>
-          <h2 className="max-w-3xl text-3xl font-semibold tracking-tight sm:text-4xl">
-            {content.finalCta.text}
-          </h2>
-          <div className="flex flex-col items-center gap-3 sm:flex-row sm:gap-6">
-            <Button asChild size="lg">
-              <Link href="mailto:maxim.laryn@gmail.com" className="inline-flex items-center gap-2">
-                Request a pilot
-                <ArrowRight className="h-4 w-4" aria-hidden />
-              </Link>
-            </Button>
-            <div className="flex flex-col items-center gap-1 text-sm text-foreground/70 sm:items-start">
-              <span>maxim.laryn@gmail.com</span>
-              <span>+32 487 22 92 72</span>
+        <section id="stakes" className="container pb-24">
+          <MotionFade className="glass rounded-[2rem] border-white/10 p-10 shadow-glass">
+            <div className="flex items-center gap-3 text-sm font-semibold text-rose-400/80">
+              <AlertTriangle className="h-5 w-5" aria-hidden />
+              What’s at stake if nothing changes
             </div>
+            <ul className="mt-6 space-y-4 text-base text-foreground/75">
+              {content.stakes.bullets.map((item) => (
+                <li key={item} className="rounded-2xl bg-white/5 p-5">
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </MotionFade>
+        </section>
+
+        <section id="success" className="container pb-24">
+          <MotionFade className="mx-auto max-w-3xl space-y-5 text-center">
+            <h2 className="text-3xl font-semibold tracking-tight text-foreground">
+              {content.success.headline}
+            </h2>
+            {content.success.body.map((paragraph) => (
+              <p key={paragraph} className="text-lg leading-relaxed text-foreground/75">
+                {paragraph}
+              </p>
+            ))}
+            {content.success.visualNote ? (
+              <p className="text-sm italic text-foreground/60">
+                {content.success.visualNote}
+              </p>
+            ) : null}
+          </MotionFade>
+        </section>
+
+        <section id="social-proof" className="container pb-24">
+          <MotionFade className="space-y-8 text-center">
+            <h2 className="text-3xl font-semibold tracking-tight text-foreground">
+              Joining forces with preventive pioneers
+            </h2>
+            <div className="flex flex-wrap items-center justify-center gap-3">
+              {content.socialProof.logos.map((logo) => (
+                <div key={logo} className="glass rounded-full px-5 py-2 text-sm font-semibold text-foreground/70">
+                  {logo}
+                </div>
+              ))}
+            </div>
+          </MotionFade>
+          <MotionFade delay={0.05} className="mt-10 mx-auto max-w-3xl">
+            <div className="glass relative overflow-hidden rounded-[2rem] border border-white/10 p-8 text-left shadow-glass">
+              <Quote className="h-10 w-10 text-accent/40" aria-hidden />
+              <p className="mt-4 text-lg italic text-foreground/80">
+                “{content.socialProof.testimonial.quote}”
+              </p>
+              {content.socialProof.testimonial.attribution ? (
+                <p className="mt-4 text-sm font-semibold uppercase tracking-[0.3em] text-foreground/60">
+                  {content.socialProof.testimonial.attribution}
+                </p>
+              ) : null}
+            </div>
+          </MotionFade>
+        </section>
+
+        <section id="faq" className="container pb-24">
+          <MotionFade className="max-w-3xl space-y-4">
+            <h2 className="text-3xl font-semibold tracking-tight text-foreground">FAQ</h2>
+            <p className="text-lg text-foreground/75">
+              Answers to the most common questions from labs and clinicians.
+            </p>
+          </MotionFade>
+          <div className="mt-10 space-y-4">
+            {content.faq.map((item, index) => (
+              <MotionFade
+                key={item.question}
+                delay={index * 0.04}
+                className="overflow-hidden rounded-3xl border border-white/10 bg-white/5"
+              >
+                <details className="group" open={index === 0}>
+                  <summary className="flex cursor-pointer items-center justify-between gap-4 px-6 py-5 text-lg font-semibold text-foreground/85">
+                    {item.question}
+                    <span className="transition group-open:rotate-45">+</span>
+                  </summary>
+                  <div className="border-t border-white/10 bg-white/5 px-6 py-5 text-sm leading-relaxed text-foreground/70">
+                    {item.answer}
+                  </div>
+                </details>
+              </MotionFade>
+            ))}
           </div>
-        </MotionFade>
-      </section>
+        </section>
+
+        <section id="final-cta" className="container pb-32">
+          <MotionFade className="glass flex flex-col items-center gap-6 rounded-[2.5rem] px-10 py-14 text-center shadow-glass">
+            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-accent/90">
+              {content.finalCta.transformation}
+            </p>
+            <h2 className="max-w-3xl text-3xl font-semibold tracking-tight sm:text-4xl">
+              {content.finalCta.banner}
+            </h2>
+            <div className="flex flex-col items-center gap-3 sm:flex-row sm:gap-6">
+              <Button asChild size="lg">
+                <Link href={content.finalCta.primaryCta.href} className="inline-flex items-center gap-2">
+                  {content.finalCta.primaryCta.label}
+                  <ArrowRight className="h-4 w-4" aria-hidden />
+                </Link>
+              </Button>
+              {content.finalCta.contactEmail ? (
+                <div className="flex flex-col items-center text-sm text-foreground/70 sm:items-start">
+                  <span>{content.finalCta.contactEmail}</span>
+                </div>
+              ) : null}
+            </div>
+          </MotionFade>
+        </section>
       </main>
     </>
   );

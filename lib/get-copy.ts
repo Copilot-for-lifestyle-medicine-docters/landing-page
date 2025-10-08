@@ -1,34 +1,66 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 
+interface CtaLink {
+  label: string;
+  href: string;
+}
+
 export interface LandingContent {
   hero: {
     title: string;
-    tagline: string;
-    primaryCta: { label: string; href: string };
-    secondaryCta: { label: string; href: string };
+    subtitle: string;
+    subline: string;
+    transformation: string;
+    primaryCta: CtaLink;
+    secondaryCta: CtaLink | null;
   };
-  who: Array<{ title: string; description: string }>;
-  problem: string;
-  solution: {
-    intro: string;
-    bullets: Array<{ title: string; description: string }>;
+  problem: {
+    label: string;
+    headline: string;
+    bullets: string[];
+    visualNote: string;
   };
-  labsChooseUs: Array<{ title: string; description: string }>;
-  physiciansRely: Array<{ title: string; description: string }>;
-  howItWorks: string[];
-  compliance: string[];
-  earlyAccess: {
-    intro: string;
-    whatYouGet: string[];
-    whatWeMeasure: string[];
+  guide: {
+    headline: string;
+    body: string[];
+    visualNote: string;
+  };
+  plan: {
+    headline: string;
+    steps: Array<{ title: string; description: string }>;
+    subline: string;
+    primaryCta: CtaLink;
+    secondaryCta: CtaLink | null;
+  };
+  stakes: {
+    bullets: string[];
+  };
+  success: {
+    headline: string;
+    body: string[];
+    visualNote: string;
+  };
+  socialProof: {
+    logos: string[];
+    testimonial: {
+      quote: string;
+      attribution: string;
+    };
+  };
+  productWalkthrough: {
+    headline: string;
+    description: string[];
+    videoUrl: string;
+  };
+  finalCta: {
+    banner: string;
+    primaryCta: CtaLink;
+    transformation: string;
+    contactEmail: string | null;
+    secondaryCta: CtaLink | null;
   };
   faq: Array<{ question: string; answer: string }>;
-  finalCta: {
-    text: string;
-    linkLabel: string;
-    linkHref: string;
-  };
 }
 
 const COPY_PATH = path.join(process.cwd(), "landing-page-copy.md");
@@ -41,159 +73,141 @@ export async function getLandingContent(): Promise<LandingContent> {
   const sections = new Map<string, string>();
   for (const chunk of sectionsRaw) {
     const newlineIndex = chunk.indexOf("\n");
+    if (newlineIndex === -1) {
+      continue;
+    }
     const heading = chunk.slice(0, newlineIndex).trim();
     const body = chunk.slice(newlineIndex + 1).trim();
     sections.set(normalizeHeading(heading), body);
   }
 
-  const heroLines = heroRaw
+  const hero = parseHero(heroRaw);
+  const problem = parseProblem(sections.get("Problem") ?? "");
+  const guide = parseGuide(sections.get("Guide") ?? "");
+  const plan = parsePlan(sections.get("Plan") ?? "");
+  const stakes = parseStakes(sections.get("Stakes") ?? "");
+  const success = parseSuccess(sections.get("Success") ?? "");
+  const socialProof = parseSocialProof(sections.get("Social proof") ?? "");
+  const productWalkthrough = parseProductWalkthrough(sections.get("Product walkthrough") ?? "");
+  const faq = parseFaq(sections.get("FAQ") ?? "");
+  const finalCta = parseFinalCta(sections.get("Call to action") ?? "", hero.transformation);
+
+  return {
+    hero,
+    problem,
+    guide,
+    plan,
+    stakes,
+    success,
+    socialProof,
+    productWalkthrough,
+    finalCta,
+    faq
+  };
+}
+
+function parseHero(raw: string): LandingContent["hero"] {
+  const lines = raw
     .split("\n")
     .map((line) => line.trim())
     .filter(Boolean);
 
-  const title = heroLines
-    .find((line) => line.startsWith("# "))
-    ?.replace(/^#\s+/, "")
-    ?.trim();
-  const tagline = heroLines.find((line) => !line.startsWith("#")) ?? "";
+  const headingLine = lines.find((line) => line.startsWith("# "));
+  const nonHeadingLines = lines.filter((line) => !line.startsWith("#"));
+  const contentLines = nonHeadingLines.filter((line) => !line.includes("]("));
+  const ctaLines = nonHeadingLines.filter((line) => line.includes("]("));
+  const parsedCtas = parseLinks(ctaLines.join(" "));
 
-  const hero = {
-    title: title ?? "Eliksir",
-    tagline,
-    primaryCta: {
-      label: "Request a pilot",
-      href: "mailto:yannick.lansink@live.nl"
-    },
-    secondaryCta: {
-      label: "How it works",
-      href: "#how-it-works"
-    }
-  };
-
-  const whoSection = sections.get("Who it's for") ?? "";
-  const who = parseStrongBulletList(whoSection);
-
-  const problemSection = sections.get("The problem today") ?? "";
-  const problem = collapseParagraphs(problemSection);
-
-  const solutionSection = sections.get("Our solution") ?? "";
-  const solution = {
-    intro: collapseParagraphs(solutionSection.split("\n-")[0] ?? ""),
-    bullets: parseStrongBulletList(solutionSection)
-  };
-
-  const labsChooseSection = sections.get("Why labs/clinics choose us") ?? "";
-  const labsChooseUs = parseStrongBulletList(labsChooseSection);
-
-  const physiciansSection = sections.get("Why physicians rely on it") ?? "";
-  const physiciansRely = parseStrongBulletList(physiciansSection);
-
-  const howSection = sections.get("How it works") ?? "";
-  const howItWorks = parseOrderedList(howSection);
-
-  const complianceSection = sections.get("Compliance by design") ?? "";
-  const compliance = parseBullets(complianceSection);
-
-  const earlySection = sections.get("Early access pilots") ?? "";
-  const { intro: earlyIntro, whatYouGet, whatWeMeasure } = parseEarlyAccess(earlySection);
-
-  const faqSection = sections.get("FAQ") ?? "";
-  const faq = parseFaq(faqSection);
-
-  const callToActionSection = sections.get("Call to action") ?? "";
-  const finalCta = parseCta(callToActionSection);
+  const subtitle = contentLines[0] ?? "";
+  const subline = contentLines[1] ?? subtitle;
+  const transformation = contentLines[2] ?? "From reactive care → to preventive health.";
 
   return {
-    hero,
-    who,
-    problem,
-    solution,
-    labsChooseUs,
-    physiciansRely,
-    howItWorks,
-    compliance,
-    earlyAccess: {
-      intro: earlyIntro,
-      whatYouGet,
-      whatWeMeasure
-    },
-    faq,
-    finalCta
+    title: headingLine ? headingLine.replace(/^#\s+/, "").trim() : "Eliksir",
+    subtitle,
+    subline,
+    transformation,
+    primaryCta: parsedCtas[0] ?? { label: "Book a Demo", href: "#contact" },
+    secondaryCta: parsedCtas[1] ?? null
   };
 }
 
-function collapseParagraphs(section: string) {
-  return section
-    .split("\n")
-    .map((line) => line.trim())
-    .filter(Boolean)
-    .join(" ");
+function parseProblem(section: string): LandingContent["problem"] {
+  const { subsections } = parseSubsections(section);
+  return {
+    label: collapseParagraphs(subsections.get("Label") ?? "The Cost of Waiting"),
+    headline: collapseParagraphs(subsections.get("Headline") ?? ""),
+    bullets: parseBullets(subsections.get("Bullets") ?? ""),
+    visualNote: collapseParagraphs(subsections.get("Visual Note") ?? "")
+  };
 }
 
-function parseBullets(section: string): string[] {
-  return section
-    .split("\n")
-    .map((line) => line.trim())
-    .filter((line) => line.startsWith("- "))
-    .map((line) => line.replace(/^-\s+/, ""));
+function parseGuide(section: string): LandingContent["guide"] {
+  const { subsections } = parseSubsections(section);
+  return {
+    headline: collapseParagraphs(subsections.get("Headline") ?? ""),
+    body: parseParagraphs(subsections.get("Body") ?? ""),
+    visualNote: collapseParagraphs(subsections.get("Visual Note") ?? "")
+  };
 }
 
-function parseStrongBulletList(section: string): Array<{ title: string; description: string }> {
-  return parseBullets(section).map((item) => {
-    const match = item.match(/^\*\*(.+?)\*\*\s*(.+)$/);
-    if (match) {
-      return {
-        title: match[1].trim(),
-        description: match[2].trim()
-      };
-    }
-    return {
-      title: item,
-      description: ""
-    };
-  });
-}
-
-function parseOrderedList(section: string): string[] {
-  return section
-    .split("\n")
-    .map((line) => line.trim())
-    .filter((line) => /^\d+\./.test(line))
-    .map((line) => line.replace(/^\d+\.\s*/, ""));
-}
-
-function parseEarlyAccess(section: string): {
-  intro: string;
-  whatYouGet: string[];
-  whatWeMeasure: string[];
-} {
-  const parts = section.split("\n### ");
-  const intro = collapseParagraphs(parts[0] ?? "");
-
-  const subsections = new Map<string, string>();
-  for (const chunk of parts.slice(1)) {
-    const newlineIndex = chunk.indexOf("\n");
-    const heading = chunk.slice(0, newlineIndex).trim();
-    const body = chunk.slice(newlineIndex + 1).trim();
-    subsections.set(normalizeHeading(heading), body);
-  }
+function parsePlan(section: string): LandingContent["plan"] {
+  const { subsections } = parseSubsections(section);
+  const ctas = parseLinks(subsections.get("CTA") ?? "");
+  const primaryCta = ctas[0] ?? { label: "Start a Pilot", href: "#final-cta" };
+  const secondaryCta = ctas[1] ?? null;
 
   return {
-    intro,
-    whatYouGet: parseBullets(
-      subsections.get("What you'll get") ?? subsections.get("What you’ll get") ?? ""
-    ),
-    whatWeMeasure: parseBullets(
-      subsections.get("What we'll measure together") ??
-        subsections.get("What we’ll measure together") ??
-        ""
-    )
+    headline: collapseParagraphs(subsections.get("Headline") ?? "How it works"),
+    steps: parsePlanSteps(subsections.get("Steps") ?? ""),
+    subline: collapseParagraphs(subsections.get("Subline") ?? ""),
+    primaryCta,
+    secondaryCta
   };
 }
 
-function parseFaq(section: string): Array<{ question: string; answer: string }> {
+function parseStakes(section: string): LandingContent["stakes"] {
+  return {
+    bullets: parseBullets(section)
+  };
+}
+
+function parseSuccess(section: string): LandingContent["success"] {
+  const { subsections } = parseSubsections(section);
+  return {
+    headline: collapseParagraphs(subsections.get("Headline") ?? ""),
+    body: parseParagraphs(subsections.get("Body") ?? ""),
+    visualNote: collapseParagraphs(subsections.get("Visual Note") ?? "")
+  };
+}
+
+function parseSocialProof(section: string): LandingContent["socialProof"] {
+  const { subsections } = parseSubsections(section);
+  const testimonialRaw = collapseParagraphs(subsections.get("Testimonial") ?? "");
+  const testimonial = extractQuote(testimonialRaw);
+
+  return {
+    logos: parseBullets(subsections.get("Logos") ?? ""),
+    testimonial
+  };
+}
+
+function parseProductWalkthrough(section: string): LandingContent["productWalkthrough"] {
+  const { subsections } = parseSubsections(section);
+  const headline = collapseParagraphs(subsections.get("Headline") ?? "Product walkthrough");
+  const description = parseParagraphs(subsections.get("Description") ?? "");
+  const videoEntry = collapseParagraphs(subsections.get("Video") ?? "");
+
+  return {
+    headline,
+    description,
+    videoUrl: extractUrl(videoEntry)
+  };
+}
+
+function parseFaq(section: string): LandingContent["faq"] {
   const lines = section.split("\n");
-  const entries: Array<{ question: string; answer: string }> = [];
+  const entries: LandingContent["faq"] = [];
   let currentQuestion: string | null = null;
   let answerLines: string[] = [];
 
@@ -202,9 +216,13 @@ function parseFaq(section: string): Array<{ question: string; answer: string }> 
     if (!line) {
       continue;
     }
+
     if (line.startsWith("- **")) {
       if (currentQuestion) {
-        entries.push({ question: currentQuestion, answer: answerLines.join(" ").trim() });
+        entries.push({
+          question: currentQuestion,
+          answer: answerLines.join(" ").trim()
+        });
         answerLines = [];
       }
       const match = line.match(/^-\s*\*\*(.+?)\*\*/);
@@ -215,29 +233,145 @@ function parseFaq(section: string): Array<{ question: string; answer: string }> 
   }
 
   if (currentQuestion) {
-    entries.push({ question: currentQuestion, answer: answerLines.join(" ").trim() });
+    entries.push({
+      question: currentQuestion,
+      answer: answerLines.join(" ").trim()
+    });
   }
 
   return entries;
 }
 
-function parseCta(section: string) {
-  const lines = section
-    .split("\n")
-    .map((line) => line.trim())
-    .filter(Boolean);
-
-  const textLine = lines.find((line) => line.startsWith("- ")) ?? "";
-  const text = textLine.replace(/^-\s*/, "");
-
-  const linkLine = lines.find((line) => line.startsWith("[")) ?? "";
-  const linkMatch = linkLine.match(/^\[(.+?)\]\((.+?)\)/);
+function parseFinalCta(section: string, fallbackTransformation: string): LandingContent["finalCta"] {
+  const { subsections } = parseSubsections(section);
+  const primary = parseLinks(subsections.get("Primary") ?? "")[0];
+  const secondary = parseLinks(subsections.get("Secondary") ?? "")[0] ?? null;
+  const transformation = collapseParagraphs(subsections.get("Transformation") ?? "") || fallbackTransformation;
+  const primaryCta = primary ?? { label: "Book a Demo", href: "#final-cta" };
 
   return {
-    text,
-    linkLabel: linkMatch ? linkMatch[1] : "Request a pilot",
-    linkHref: linkMatch ? linkMatch[2] : "mailto:yannick.lansink@live.nl"
+    banner: collapseParagraphs(subsections.get("Banner") ?? ""),
+    primaryCta,
+    secondaryCta: secondary,
+    transformation,
+    contactEmail: extractEmailFromHref(primaryCta.href)
   };
+}
+
+function parseSubsections(section: string) {
+  const parts = section.split("\n### ");
+  const subsections = new Map<string, string>();
+
+  for (const chunk of parts.slice(1)) {
+    const newlineIndex = chunk.indexOf("\n");
+    if (newlineIndex === -1) {
+      continue;
+    }
+    const heading = chunk.slice(0, newlineIndex).trim();
+    const body = chunk.slice(newlineIndex + 1).trim();
+    subsections.set(normalizeHeading(heading), body);
+  }
+
+  return { subsections };
+}
+
+function collapseParagraphs(section: string) {
+  return section
+    .split("\n")
+    .map((line) => line.trim())
+    .filter(Boolean)
+    .join(" ");
+}
+
+function parseParagraphs(section: string): string[] {
+  const paragraphs: string[] = [];
+  let current: string[] = [];
+
+  for (const rawLine of section.split("\n")) {
+    const line = rawLine.trim();
+    if (!line) {
+      if (current.length) {
+        paragraphs.push(current.join(" "));
+        current = [];
+      }
+      continue;
+    }
+    current.push(line);
+  }
+
+  if (current.length) {
+    paragraphs.push(current.join(" "));
+  }
+
+  return paragraphs;
+}
+
+function parseBullets(section: string): string[] {
+  return section
+    .split("\n")
+    .map((line) => line.trim())
+    .filter((line) => line.startsWith("- "))
+    .map((line) => line.replace(/^-\s+/, ""));
+}
+
+function parsePlanSteps(section: string): Array<{ title: string; description: string }> {
+  return section
+    .split("\n")
+    .map((line) => line.trim())
+    .filter((line) => /^\d+\./.test(line))
+    .map((line) => line.replace(/^\d+\.\s*/, ""))
+    .map((line) => {
+      const match = line.match(/^\*\*(.+?)\*\*\s*[—–-]\s*(.+)$/);
+      if (match) {
+        return {
+          title: match[1].trim(),
+          description: match[2].trim()
+        };
+      }
+      return {
+        title: line.trim(),
+        description: ""
+      };
+    });
+}
+
+function parseLinks(value: string): CtaLink[] {
+  return Array.from(value.matchAll(/\[(.+?)\]\((.+?)\)/g)).map((match) => ({
+    label: match[1].trim(),
+    href: match[2].trim()
+  }));
+}
+
+function extractQuote(value: string) {
+  if (!value) {
+    return { quote: "", attribution: "" };
+  }
+
+  const match = value.match(/^[“"]?(.*?)[”"]?\s*[—–-]\s*(.+)$/);
+  if (match) {
+    return {
+      quote: match[1].trim(),
+      attribution: match[2].trim()
+    };
+  }
+
+  return {
+    quote: value,
+    attribution: ""
+  };
+}
+
+function extractUrl(value: string) {
+  const match = value.match(/https?:\/\/\S+/);
+  return match ? match[0] : value;
+}
+
+function extractEmailFromHref(href: string): string | null {
+  if (!href) {
+    return null;
+  }
+  const match = href.match(/^mailto:([^?]+)/i);
+  return match ? match[1] : null;
 }
 
 function normalizeHeading(value: string) {
