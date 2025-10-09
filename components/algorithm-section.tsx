@@ -72,36 +72,39 @@ export function AlgorithmSection({ content }: AlgorithmSectionProps) {
           </div>
 
           <div className="relative flex items-center justify-center">
-            <div className="relative h-[320px] w-[320px] sm:h-[360px] sm:w-[360px]">
+            <div className="relative w-full max-w-[360px] aspect-square">
               <div
                 className="absolute inset-0 rounded-[2.6rem] border border-white/15 bg-gradient-to-br from-cyan-500/20 via-transparent to-accent/20 backdrop-blur-xl"
                 aria-hidden
               />
               <div
-                className="absolute inset-6 rounded-[2.2rem] border border-white/10"
+                className="absolute rounded-[2.2rem] border border-white/10"
+                style={{ inset: "7.5%" }}
                 aria-hidden
               />
               <div
-                className="absolute inset-10 rounded-full border border-white/20"
+                className="absolute rounded-full border border-white/20"
+                style={{ inset: "12.5%" }}
                 aria-hidden
               />
               <div
-                className="absolute inset-14 rounded-full border border-white/20"
-                style={{ animation: "spin 18s linear infinite" }}
+                className="absolute rounded-full border border-white/20"
+                style={{ animation: "spin 18s linear infinite", inset: "17.5%" }}
                 aria-hidden
               />
               <div
-                className="absolute inset-20 rounded-full border-dashed border-white/30"
-                style={{ animation: "spin 26s linear infinite reverse" }}
+                className="absolute rounded-full border-dashed border-white/30"
+                style={{ animation: "spin 26s linear infinite reverse", inset: "25%" }}
                 aria-hidden
               />
               <div
-                className="absolute inset-24 rounded-full bg-gradient-to-br from-accent/30 via-white/10 to-cyan-500/20 blur-3xl"
+                className="absolute rounded-full bg-gradient-to-br from-accent/30 via-white/10 to-cyan-500/20 blur-3xl"
+                style={{ inset: "30%" }}
                 aria-hidden
               />
               <div
-                className="absolute inset-[104px] rounded-full border border-white/40"
-                style={{ animation: "pulseGlow 6s ease-in-out infinite" }}
+                className="absolute rounded-full border border-white/40"
+                style={{ animation: "pulseGlow 6s ease-in-out infinite", inset: "32.5%" }}
                 aria-hidden
               />
 
@@ -124,7 +127,8 @@ export function AlgorithmSection({ content }: AlgorithmSectionProps) {
               ))}
 
               <div
-                className="absolute inset-[140px] flex items-center justify-center rounded-full border border-white/40 bg-white/10 shadow-[0_20px_60px_-20px_rgba(16,185,129,0.45)]"
+                className="absolute flex items-center justify-center rounded-full border border-white/40 bg-white/10 shadow-[0_20px_60px_-20px_rgba(16,185,129,0.45)]"
+                style={{ inset: "44%" }}
                 aria-hidden
               >
                 <div className="flex flex-col items-center gap-2 text-center">

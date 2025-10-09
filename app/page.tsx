@@ -161,7 +161,8 @@ export default async function Home() {
               </div>
             </MotionFade>
 
-            <MotionFade delay={0.1} className="relative w-full max-w-5xl">
+            {/* Desktop/Tablet hero image */}
+            <MotionFade delay={0.1} className="relative w-full max-w-5xl hidden md:block">
               <div className="glass relative overflow-hidden rounded-[3rem] border-white/10 bg-white/10 p-5 shadow-glass sm:p-6">
                 <div className="relative overflow-hidden rounded-[2.5rem] bg-white">
                   <Image
@@ -175,6 +176,20 @@ export default async function Home() {
                 </div>
               </div>
               <div className="pointer-events-none absolute inset-x-12 -bottom-12 -z-10 h-24 rounded-full bg-black/40 blur-3xl" aria-hidden />
+            </MotionFade>
+
+            {/* Mobile-only hero image replacement */}
+            <MotionFade delay={0.1} className="relative w-full max-w-5xl md:hidden">
+              <div className="relative overflow-hidden rounded-[2rem]">
+                <Image
+                  src="/images/yanuzay_doctor_silhouette_with_calm_posture_reviewing_clear_d_6e2edb7d-abfa-426d-b81b-9bf17f43ca5c_0.png"
+                  alt="Doctor silhouette reviewing clear digital chart"
+                  width={1200}
+                  height={800}
+                  priority
+                  className="h-auto w-full object-cover"
+                />
+              </div>
             </MotionFade>
           </div>
         </header>
