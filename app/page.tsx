@@ -165,14 +165,17 @@ export default async function Home() {
             <MotionFade delay={0.1} className="relative w-full max-w-5xl hidden md:block">
               <div className="glass relative overflow-hidden rounded-[3rem] border-white/10 bg-white/10 p-5 shadow-glass sm:p-6">
                 <div className="relative overflow-hidden rounded-[2.5rem] bg-white">
-                  <Image
-                    src="/images/Ontwerp zonder titel.png"
-                    alt="Eliksir transforming lab reports into preventive intelligence"
-                    width={1781}
-                    height={680}
-                    priority
+                  <video
                     className="h-auto w-full object-cover"
-                  />
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    preload="metadata"
+                    aria-label="Eliksir transforming lab reports into preventive intelligence"
+                  >
+                    <source src="/Untitled.mp4" type="video/mp4" />
+                  </video>
                 </div>
               </div>
               <div className="pointer-events-none absolute inset-x-12 -bottom-12 -z-10 h-24 rounded-full bg-black/40 blur-3xl" aria-hidden />
