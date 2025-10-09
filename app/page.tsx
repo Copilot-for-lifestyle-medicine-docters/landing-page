@@ -172,6 +172,7 @@ export default async function Home() {
                     loop
                     playsInline
                     preload="metadata"
+                    poster="/images/Ontwerp zonder titel.png"
                     aria-label="Eliksir transforming lab reports into preventive intelligence"
                   >
                     <source src="/Untitled.mp4" type="video/mp4" />
